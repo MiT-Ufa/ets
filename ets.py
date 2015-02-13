@@ -97,6 +97,9 @@ ets_package_names = """\
 ets_ssh = "git@github.com:enthought/%s.git"
 ets_https = "https://github.com/enthought/%s.git"
 
+mit_ssh = "git@github.com:MiT-Ufa/%s.git"
+mit_https = "https://github.com/MiT-Ufa/%s.git"
+
 alias_dict = {}
 for line in aliases.split('\n'):
     tokens = line.split()
@@ -125,8 +128,14 @@ def main():
             print "Cloning package %s" % ets_pkg_name
             if '--ssh' in sys.argv:
                 pkg_url = ets_ssh % ets_pkg_name
+
+                if ets_pkg_name == "pyface":
+                   pkg_url = mit_ssh % ets_pkg_name
             else:
                 pkg_url = ets_https % ets_pkg_name
+
+                if ets_pkg_name == "pyface":
+                   pkg_url = mit_https % ets_pkg_name
             print "URL: %s" % pkg_url
             subprocess.check_call(['git', 'clone', pkg_url, ets_pkg_name])
         else:
